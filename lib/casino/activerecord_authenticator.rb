@@ -36,7 +36,7 @@ class CASino::ActiveRecordAuthenticator
   end
 
   def validate(username, password)
-    user = @model.send :find_by,"name = '#{username}' OR email = '#{username}' OR phone = '#{username}'"
+    user = @model.send :find_by!,"name = '#{username}' OR email = '#{username}' OR phone = '#{username}'"
 
     password_from_database = user.send(@options[:password_column])
     if valid_password?(password, password_from_database)
@@ -50,7 +50,7 @@ class CASino::ActiveRecordAuthenticator
   end
 
   def load_user_data(username)
-    user = @model.send :find_by,"name = '#{username}' OR email = '#{username}' OR phone = '#{username}'"
+    user = @model.send :find_by!,"name = '#{username}' OR email = '#{username}' OR phone = '#{username}'"
     user_data(user)
   rescue ActiveRecord::RecordNotFound
     nil
